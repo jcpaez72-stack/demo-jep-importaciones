@@ -1,0 +1,565 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+#root{display:grid;grid-template-columns:188px 1fr;gap:14px;padding:12px 0;align-items:start}
+#left{display:flex;flex-direction:column;gap:10px}
+.lcard{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:11px}
+.lsec-title{font-size:9px;font-weight:500;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.brand-row{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.bdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.bname{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.bsub{font-size:10px;color:var(--color-text-secondary)}
+.fbtn{width:100%;text-align:left;padding:7px 9px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);color:var(--color-text-secondary);font-size:11px;cursor:pointer;display:flex;align-items:center;gap:7px;margin-bottom:5px;transition:all .15s}
+.fbtn:last-child{margin-bottom:0}
+.fbtn:hover,.fbtn.active{border-color:#25D366;color:#075E54;background:#f0fdf4}
+.fbtn i{font-size:13px;flex-shrink:0;color:#25D366}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.sbox{background:var(--color-background-primary);border-radius:var(--border-radius-md);padding:7px;text-align:center}
+.snum{font-size:16px;font-weight:500;color:#075E54}
+.slbl{font-size:9px;color:var(--color-text-secondary);line-height:1.3}
+.pw{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px;background:var(--color-background-primary);text-align:center}
+.pw-logos{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:5px}
+.pw-logo{font-size:10px;font-weight:500;padding:3px 7px;border-radius:4px}
+.pw-wdb{background:#1a1a2e;color:#fff}
+.pw-593{background:#c8102e;color:#fff}
+.pw-jelou{background:#075E54;color:#fff}
+.pw-txt{font-size:9px;color:var(--color-text-tertiary)}
+
+#phone-wrap{display:flex;justify-content:center}
+#phone{width:320px;border-radius:38px;border:9px solid #111;background:#111;display:flex;flex-direction:column;overflow:hidden}
+.wb-sbar{background:#075E54;padding:5px 16px 3px;display:flex;justify-content:space-between;align-items:center}
+.wb-time{font-size:11px;color:#fff;font-weight:500}
+.wb-icons{display:flex;gap:4px}
+.wb-icons i{font-size:11px;color:#fff}
+.wb-hdr{background:#075E54;padding:10px 12px;display:flex;align-items:center;gap:9px}
+.wb-av{width:34px;height:34px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:500;flex-shrink:0}
+.wb-cn{font-size:13px;font-weight:500;color:#fff}
+.wb-cs{font-size:10px;color:#B2DFDB}
+.wb-hi{display:flex;gap:14px;margin-left:auto}
+.wb-hi i{font-size:18px;color:#fff}
+.wb-body{background:#ECE5DD;flex:1;padding:8px 10px;display:flex;flex-direction:column;gap:7px;min-height:480px;max-height:480px;overflow-y:auto}
+.wb-sep{text-align:center;font-size:9px;color:#667781;background:rgba(255,255,255,.85);border-radius:6px;padding:2px 8px;width:fit-content;margin:0 auto}
+.wm{display:flex;flex-direction:column;max-width:84%}
+.wm.bot{align-self:flex-start}
+.wm.user{align-self:flex-end}
+.wb{padding:7px 10px;border-radius:8px;font-size:11.5px;line-height:1.55;color:#111}
+.wm.bot .wb{background:#fff;border-top-left-radius:0}
+.wm.user .wb{background:#DCF8C6;border-top-right-radius:0}
+.wts{font-size:9px;color:#999;text-align:right;margin-top:2px}
+
+.w-list{background:#fff;border-radius:8px;overflow:hidden;border:0.5px solid #ddd;width:100%}
+.wl-hdr{padding:8px 10px;font-size:11px;font-weight:500;color:#111;border-bottom:0.5px solid #eee}
+.wl-item{padding:8px 10px;border-bottom:0.5px solid #f2f2f2;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .12s}
+.wl-item:last-child{border-bottom:none}
+.wl-item:hover{background:#f9fef9}
+.wl-t{font-size:11px;color:#111;font-weight:500}
+.wl-d{font-size:9.5px;color:#667781}
+.wl-arr{font-size:13px;color:#25D366}
+
+.w-flow{background:#fff;border-radius:10px;overflow:hidden;border:0.5px solid #ddd;width:100%}
+.wf-top{background:#075E54;padding:9px 11px;display:flex;align-items:center;gap:7px}
+.wf-meta{font-size:9px;color:#B2DFDB;display:flex;align-items:center;gap:4px}
+.wf-meta i{font-size:10px}
+.wf-title{font-size:12px;font-weight:500;color:#fff}
+.wf-sub{font-size:9.5px;color:#B2DFDB}
+.wf-body{padding:10px}
+.wf-lbl{font-size:9.5px;color:#667781;margin-bottom:3px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.wf-sel{width:100%;padding:7px 9px;border-radius:6px;border:0.5px solid #ccc;background:#fafafa;font-size:11px;margin-bottom:8px;color:#111}
+.wf-inp{width:100%;padding:7px 9px;border-radius:6px;border:0.5px solid #ccc;background:#fafafa;font-size:11px;margin-bottom:8px;color:#111}
+.wf-submit{width:100%;padding:9px;background:#25D366;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;margin-top:2px}
+.wf-submit:hover{background:#1db954}
+
+.w-catalog{background:#fff;border-radius:8px;overflow:hidden;border:0.5px solid #ddd;width:100%}
+.wc-hdr{padding:8px 10px;border-bottom:0.5px solid #eee;font-size:11px;font-weight:500;color:#111;display:flex;align-items:center;gap:6px}
+.wc-hdr i{font-size:13px;color:#25D366}
+.wc-item{padding:8px 10px;display:flex;gap:8px;border-bottom:0.5px solid #f5f5f5;align-items:center}
+.wc-item:last-child{border-bottom:none}
+.wc-img{width:42px;height:42px;border-radius:6px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.wc-name{font-size:10.5px;font-weight:500;color:#111;line-height:1.3}
+.wc-ref{font-size:9px;color:#999}
+.wc-price{font-size:12px;font-weight:500;color:#075E54}
+.wc-stk{font-size:9px;color:#25D366}
+.wc-add{margin-left:auto;padding:5px 9px;background:#25D366;color:#fff;border:none;border-radius:5px;font-size:10px;cursor:pointer;flex-shrink:0;font-weight:500}
+
+.w-pay{background:#fff;border-radius:10px;overflow:hidden;border:0.5px solid #ddd;width:100%}
+.wp-hdr{padding:9px 12px;background:#f8f8f8;border-bottom:0.5px solid #eee;font-size:11.5px;font-weight:500;color:#111;display:flex;align-items:center;gap:6px}
+.wp-hdr i{font-size:14px;color:#075E54}
+.wp-sum{padding:8px 12px;border-bottom:0.5px solid #eee}
+.wp-row{display:flex;justify-content:space-between;font-size:10.5px;color:#667781;margin-bottom:3px}
+.wp-total{display:flex;justify-content:space-between;font-size:13px;font-weight:500;color:#111;padding:8px 12px;border-bottom:0.5px solid #eee}
+.wp-methods{padding:8px 12px;display:flex;flex-direction:column;gap:6px}
+.wp-label{font-size:9.5px;color:#667781;margin-bottom:2px;text-transform:uppercase;letter-spacing:.04em}
+.wp-btn{width:100%;padding:9px 11px;border-radius:8px;border:0.5px solid #e0e0e0;background:#fff;cursor:pointer;display:flex;align-items:center;gap:9px;transition:background .15s}
+.wp-btn:hover{background:#f5f5f5}
+.wp-ico{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:500}
+.una-ico{background:#E8F5E9;color:#2E7D32}
+.nuvei-ico{background:#E3F2FD;color:#1565C0}
+.wp-btn-lbl{font-size:11px;font-weight:500;color:#111}
+.wp-btn-sub{font-size:9.5px;color:#667781}
+
+.w-una{background:#fff;border-radius:10px;overflow:hidden;border:0.5px solid #ddd;width:100%}
+.wu-hdr{background:#2E7D32;padding:9px 12px;display:flex;align-items:center;gap:8px}
+.wu-title{font-size:12px;font-weight:500;color:#fff}
+.wu-sub{font-size:9.5px;color:#A5D6A7}
+.wu-body{padding:12px;text-align:center}
+.wu-code{font-size:22px;font-weight:500;color:#2E7D32;letter-spacing:4px;margin:6px 0}
+.wu-exp{font-size:10px;color:#667781}
+.wu-tip{font-size:10px;color:#555;margin-top:8px;background:#F1F8E9;border-radius:6px;padding:7px 9px;text-align:left}
+
+.w-nuvei{background:#fff;border-radius:10px;overflow:hidden;border:0.5px solid #ddd;width:100%}
+.wn-hdr{background:#1565C0;padding:9px 12px;display:flex;align-items:center;gap:8px}
+.wn-title{font-size:12px;font-weight:500;color:#fff}
+.wn-sub{font-size:9.5px;color:#90CAF9}
+.wn-body{padding:10px}
+.wn-lbl{font-size:9.5px;color:#667781;margin-bottom:3px;font-weight:500}
+.wn-inp{width:100%;padding:7px 9px;border-radius:6px;border:0.5px solid #ccc;background:#fafafa;font-size:11px;margin-bottom:7px;color:#111}
+.wn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.wn-pay{width:100%;padding:9px;background:#1565C0;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;margin-top:4px}
+.wn-pay:hover{background:#1976D2}
+.wn-secure{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:7px;font-size:9.5px;color:#999}
+.wn-secure i{font-size:11px}
+
+.w-ok{background:#fff;border-radius:10px;overflow:hidden;border:0.5px solid #ddd;width:100%;text-align:center;padding:16px 12px}
+.wo-icon{width:46px;height:46px;border-radius:50%;background:#E8F5E9;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:20px;color:#2E7D32}
+.wo-title{font-size:13px;font-weight:500;color:#111;margin-bottom:3px}
+.wo-sub{font-size:10.5px;color:#667781}
+.wo-num{font-size:11px;color:#075E54;margin-top:6px;font-weight:500}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.wchip{padding:5px 10px;border-radius:14px;border:0.5px solid #25D366;color:#075E54;font-size:10.5px;background:#fff;cursor:pointer;transition:background .12s}
+.wchip:hover{background:#f0fdf4}
+
+.wb-ibar{background:#f0f0f0;padding:8px 10px;display:flex;align-items:center;gap:7px;border-top:0.5px solid #ccc}
+.wb-inp{flex:1;padding:6px 11px;border-radius:18px;border:none;background:#fff;font-size:11px;color:#111;outline:none}
+.wb-send{width:30px;height:30px;border-radius:50%;background:#25D366;border:none;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.wb-send i{font-size:13px}
+.typing{display:flex;gap:3px;padding:8px 12px;align-items:center}
+.td{width:5px;height:5px;border-radius:50%;background:#999;animation:bop 1.2s infinite}
+.td:nth-child(2){animation-delay:.2s}
+.td:nth-child(3){animation-delay:.4s}
+@keyframes bop{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+</style>
+
+<h2 class="sr-only">Demo interactivo de WhatsApp para JEP Importaciones — construido por WDB y 593IA sobre plataforma Jelou, con flows nativos de Meta, catálogo nativo y pagos in-chat vía Una y Nuvei</h2>
+
+<div id="root">
+  <div id="left">
+    <div class="lcard">
+      <div class="lsec-title">Equipo</div>
+      <div class="brand-row"><div class="bdot" style="background:#1a1a2e"></div><div><div class="bname">WDB</div><div class="bsub">Presenta</div></div></div>
+      <div class="brand-row"><div class="bdot" style="background:#c8102e"></div><div><div class="bname">593IA</div><div class="bsub">Arquitecto</div></div></div>
+      <div class="brand-row"><div class="bdot" style="background:#075E54"></div><div><div class="bname">Jelou</div><div class="bsub">Plataforma</div></div></div>
+    </div>
+
+    <div class="lcard">
+      <div class="lsec-title">Flujos del demo</div>
+      <button class="fbtn active" onclick="goFlow('start')"><i class="ti ti-message-circle" aria-hidden="true"></i>Bienvenida</button>
+      <button class="fbtn" onclick="goFlow('flow')"><i class="ti ti-layout-list" aria-hidden="true"></i>WA Flow — búsqueda</button>
+      <button class="fbtn" onclick="goFlow('catalog')"><i class="ti ti-shopping-bag" aria-hidden="true"></i>Catálogo nativo</button>
+      <button class="fbtn" onclick="goFlow('payment')"><i class="ti ti-credit-card" aria-hidden="true"></i>Selección de pago</button>
+      <button class="fbtn" onclick="goFlow('una')"><i class="ti ti-building-bank" aria-hidden="true"></i>Una — Banco Pichincha</button>
+      <button class="fbtn" onclick="goFlow('nuvei')"><i class="ti ti-credit-card" aria-hidden="true"></i>Tarjeta — Nuvei</button>
+      <button class="fbtn" onclick="goFlow('success')"><i class="ti ti-circle-check" aria-hidden="true"></i>Confirmación</button>
+    </div>
+
+    <div class="lcard">
+      <div class="lsec-title">Métricas</div>
+      <div class="stat-grid">
+        <div class="sbox"><div class="snum">94%</div><div class="slbl">Satisfacción</div></div>
+        <div class="sbox"><div class="snum">2m</div><div class="slbl">Resp. prom.</div></div>
+        <div class="sbox"><div class="snum">5.6k</div><div class="slbl">Chats/mes</div></div>
+        <div class="sbox"><div class="snum">68%</div><div class="slbl">Auto-resuelto</div></div>
+      </div>
+    </div>
+
+    <div class="pw">
+      <div class="pw-logos">
+        <span class="pw-logo pw-wdb">WDB</span>
+        <span style="font-size:10px;color:var(--color-text-tertiary)">×</span>
+        <span class="pw-logo pw-593">593IA</span>
+        <span style="font-size:10px;color:var(--color-text-tertiary)">×</span>
+        <span class="pw-logo pw-jelou">Jelou</span>
+      </div>
+      <div class="pw-txt">Demo para JEP Importaciones</div>
+    </div>
+  </div>
+
+  <div id="phone-wrap">
+    <div id="phone">
+      <div class="wb-sbar">
+        <span class="wb-time">9:41</span>
+        <div class="wb-icons"><i class="ti ti-wifi" aria-hidden="true"></i><i class="ti ti-battery" aria-hidden="true"></i></div>
+      </div>
+      <div class="wb-hdr">
+        <i class="ti ti-arrow-left" style="color:#fff;font-size:18px" aria-hidden="true"></i>
+        <div class="wb-av">JEP</div>
+        <div style="flex:1"><div class="wb-cn">JEP Importaciones</div><div class="wb-cs"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#25D366;margin-right:4px;vertical-align:middle"></span>en línea</div></div>
+        <div class="wb-hi"><i class="ti ti-video" aria-hidden="true"></i><i class="ti ti-phone" aria-hidden="true"></i><i class="ti ti-dots-vertical" aria-hidden="true"></i></div>
+      </div>
+
+      <div class="wb-body" id="chat"></div>
+
+      <div class="wb-ibar">
+        <i class="ti ti-mood-smile" style="font-size:20px;color:#667781" aria-hidden="true"></i>
+        <input class="wb-inp" id="wainput" placeholder="Escribe un mensaje..." onkeydown="if(event.key==='Enter')userSend(this.value)"/>
+        <button class="wb-send" onclick="userSend(document.getElementById('wainput').value)" aria-label="Enviar"><i class="ti ti-send" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const chat = document.getElementById('chat');
+let busy = false;
+
+const FLOWS = {
+  start: [
+    {type:'sep', text:'Hoy'},
+    {type:'bot', text:'👋 ¡Hola! Soy el asistente de <b>JEP Importaciones</b>.\n\nTenemos más de <b>5,696 repuestos</b> de carrocería, iluminación y refrigeración. ¿En qué te puedo ayudar?'},
+    {type:'list', header:'¿Qué deseas hacer?', items:[
+      {t:'🔍 Buscar un repuesto', d:'Por marca, modelo y año', flow:'flow'},
+      {t:'📦 Ver catálogo', d:'Explorar productos disponibles', flow:'catalog'},
+      {t:'🚚 Consultar envíos', d:'Tiempos y cobertura', flow:null, resp:'Hacemos envíos a todo Ecuador. Quito y Guayaquil en 24h, resto del país en 48-72h. ¿Te ayudo con algo más?'},
+      {t:'👤 Hablar con asesor', d:'Transferir a humano', flow:null, resp:'Transfiriéndote con un asesor JEP... Tiempo estimado: ~2 min. También puedes escribirnos al 099 614 5457.'}
+    ]}
+  ],
+  flow: [
+    {type:'bot', text:'Voy a abrir el buscador de repuestos 🔍'},
+    {type:'waflow', title:'Buscar repuesto', sub:'Paso 1 de 2 · Datos del vehículo', fields:[
+      {label:'Marca', type:'select', opts:['Chevrolet','Toyota','Hyundai','Kia','Nissan','Mazda','Suzuki','Renault','Ford','Mitsubishi']},
+      {label:'Modelo', type:'select', opts:['Aveo','Corolla','Tucson','Sportage','Sentra B15','CX-5','Grand Vitara','Duster','Ranger','L200']},
+      {label:'Año', type:'select', opts:['2024','2023','2022','2021','2020','2019','2018','2017','2016','2015','2014','2013']},
+      {label:'Tipo de repuesto', type:'select', opts:['Guardachoque Delantero','Guardachoque Posterior','Guardafango','Capót','Retrovisor','Mascarilla','Puerta','Panel Delantero']}
+    ], next:'catalog'}
+  ],
+  catalog: [
+    {type:'bot', text:'Aquí tienes los resultados del catálogo de Meta para tu búsqueda 📦'},
+    {type:'catalog', items:[
+      {emoji:'🚗', name:'Guardachoque Del. Chevrolet Aveo 2010/2014', ref:'CV04089EA', price:'$34.62', stock:'Disponible'},
+      {emoji:'🚙', name:'Guardafango Der. Chevrolet Aveo 2004/2010', ref:'CV11024B', price:'$28.50', stock:'Disponible'},
+      {emoji:'🚕', name:'Capót Chevrolet Aveo Emotion 2009/2014', ref:'CV05031GA', price:'$87.40', stock:'Últimas 3 unidades'}
+    ], next:'payment'}
+  ],
+  payment: [
+    {type:'user', text:'Agregar al carrito: Guardachoque Del. Chevrolet Aveo'},
+    {type:'bot', text:'¡Perfecto! Resumen de tu pedido 🛒'},
+    {type:'payment'}
+  ],
+  una: [
+    {type:'user', text:'Pagar con Una — Banco Pichincha'},
+    {type:'bot', text:'Generando tu código de pago Una... ⏳'},
+    {type:'una'}
+  ],
+  nuvei: [
+    {type:'user', text:'Pagar con tarjeta de crédito'},
+    {type:'bot', text:'Abriendo formulario de pago seguro vía Nuvei 🔒'},
+    {type:'nuvei'}
+  ],
+  success: [
+    {type:'user', text:'Pagar $38.52'},
+    {type:'bot', text:'Procesando pago... ⏳'},
+    {type:'success'}
+  ]
+};
+
+function goFlow(key) {
+  if(busy) return;
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  chat.innerHTML = '';
+  const steps = FLOWS[key];
+  if(!steps) return;
+  renderSteps(steps, 0);
+}
+
+function renderSteps(steps, i) {
+  if(i >= steps.length) return;
+  const s = steps[i];
+  const delay = i === 0 ? 0 : 600;
+  setTimeout(() => {
+    if(s.type === 'sep') {
+      const d = document.createElement('div');
+      d.className = 'wb-sep'; d.textContent = s.text;
+      chat.appendChild(d);
+      renderSteps(steps, i+1);
+    } else if(s.type === 'bot') {
+      showTypingThen(() => {
+        addBubble('bot', s.text);
+        renderSteps(steps, i+1);
+      });
+    } else if(s.type === 'user') {
+      addBubble('user', s.text);
+      renderSteps(steps, i+1);
+    } else if(s.type === 'list') {
+      showTypingThen(() => {
+        addList(s);
+        renderSteps(steps, i+1);
+      });
+    } else if(s.type === 'waflow') {
+      showTypingThen(() => {
+        addWAFlow(s);
+        renderSteps(steps, i+1);
+      });
+    } else if(s.type === 'catalog') {
+      showTypingThen(() => {
+        addCatalog(s);
+        renderSteps(steps, i+1);
+      });
+    } else if(s.type === 'payment') {
+      showTypingThen(() => {
+        addPayment();
+        renderSteps(steps, i+1);
+      });
+    } else if(s.type === 'una') {
+      showTypingThen(() => {
+        addUna();
+        renderSteps(steps, i+1);
+      });
+    } else if(s.type === 'nuvei') {
+      showTypingThen(() => {
+        addNuvei();
+        renderSteps(steps, i+1);
+      });
+    } else if(s.type === 'success') {
+      showTypingThen(() => {
+        addSuccess();
+        renderSteps(steps, i+1);
+      });
+    }
+  }, delay);
+}
+
+function showTypingThen(cb) {
+  busy = true;
+  const wrap = document.createElement('div');
+  wrap.className = 'wm bot'; wrap.id = 'typing-ind';
+  wrap.innerHTML = '<div class="wb"><div class="typing"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>';
+  chat.appendChild(wrap);
+  chat.scrollTop = chat.scrollHeight;
+  setTimeout(() => {
+    const t = document.getElementById('typing-ind');
+    if(t) t.remove();
+    busy = false;
+    cb();
+    chat.scrollTop = chat.scrollHeight;
+  }, 900);
+}
+
+function addBubble(side, html) {
+  const w = document.createElement('div');
+  w.className = 'wm ' + side;
+  w.innerHTML = `<div class="wb">${html.replace(/\n/g,'<br>')}</div><div class="wts">${ts()}</div>`;
+  chat.appendChild(w);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function addList(s) {
+  const w = document.createElement('div');
+  w.className = 'wm bot';
+  let items = s.items.map(it => `
+    <div class="wl-item" onclick="listTap(this,'${it.flow || ''}','${(it.resp||'').replace(/'/g,"\\'")}')">
+      <div><div class="wl-t">${it.t}</div><div class="wl-d">${it.d}</div></div>
+      <i class="ti ti-chevron-right wl-arr" aria-hidden="true"></i>
+    </div>`).join('');
+  w.innerHTML = `<div class="w-list"><div class="wl-hdr">${s.header}</div>${items}</div><div class="wts">${ts()}</div>`;
+  chat.appendChild(w);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function listTap(el, flow, resp) {
+  if(flow) { goFlowDirect(flow); return; }
+  if(resp) { addBubble('bot', resp); }
+}
+
+function goFlowDirect(key) {
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+  chat.innerHTML = '';
+  const steps = FLOWS[key];
+  if(steps) renderSteps(steps, 0);
+}
+
+function addWAFlow(s) {
+  const w = document.createElement('div');
+  w.className = 'wm bot';
+  let fields = s.fields.map(f => {
+    if(f.type === 'select') {
+      let opts = f.opts.map(o=>`<option>${o}</option>`).join('');
+      return `<div class="wf-lbl">${f.label}</div><select class="wf-sel"><option value="">Seleccionar...</option>${opts}</select>`;
+    }
+    return `<div class="wf-lbl">${f.label}</div><input class="wf-inp" placeholder="${f.label}..."/>`;
+  }).join('');
+  w.innerHTML = `<div class="w-flow">
+    <div class="wf-top">
+      <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center"><i class="ti ti-search" style="font-size:14px;color:#fff" aria-hidden="true"></i></div>
+      <div><div class="wf-title">${s.title}</div><div class="wf-sub">${s.sub}</div></div>
+      <div style="margin-left:auto"><div class="wf-meta"><i class="ti ti-brand-meta" aria-hidden="true"></i>WhatsApp Flows</div></div>
+    </div>
+    <div class="wf-body">${fields}<button class="wf-submit" onclick="submitFlow('${s.next||'catalog'}')">Buscar repuesto →</button></div>
+  </div><div class="wts">${ts()}</div>`;
+  chat.appendChild(w);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function submitFlow(next) {
+  addBubble('user','✓ Formulario enviado');
+  setTimeout(() => goFlowDirect(next), 400);
+}
+
+function addCatalog(s) {
+  const w = document.createElement('div');
+  w.className = 'wm bot';
+  let items = s.items.map(it => `
+    <div class="wc-item">
+      <div class="wc-img">${it.emoji}</div>
+      <div style="flex:1;min-width:0">
+        <div class="wc-name">${it.name}</div>
+        <div class="wc-ref">Ref: ${it.ref}</div>
+        <div class="wc-price">${it.price}</div>
+        <div class="wc-stk">✓ ${it.stock}</div>
+      </div>
+      <button class="wc-add" onclick="addToCart(this)">+ Agregar</button>
+    </div>`).join('');
+  w.innerHTML = `<div class="w-catalog">
+    <div class="wc-hdr"><i class="ti ti-shopping-bag" aria-hidden="true"></i>Catálogo JEP · Meta Business</div>
+    ${items}
+  </div><div class="wts">${ts()}</div>`;
+  chat.appendChild(w);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function addToCart(btn) {
+  btn.textContent = '✓';
+  btn.style.background = '#075E54';
+  setTimeout(() => goFlowDirect('payment'), 600);
+}
+
+function addPayment() {
+  const w = document.createElement('div');
+  w.className = 'wm bot';
+  w.innerHTML = `<div class="w-pay">
+    <div class="wp-hdr"><i class="ti ti-shopping-cart" aria-hidden="true"></i>Resumen de pedido</div>
+    <div class="wp-sum">
+      <div class="wp-row"><span>Guardachoque Del. Chevrolet Aveo</span><span>$34.62</span></div>
+      <div class="wp-row"><span>Envío a Guayaquil</span><span>$3.90</span></div>
+    </div>
+    <div class="wp-total"><span>Total</span><span>$38.52</span></div>
+    <div class="wp-methods">
+      <div class="wp-label">Elige tu forma de pago</div>
+      <button class="wp-btn" onclick="goFlowDirect('una')">
+        <div class="wp-ico una-ico">U</div>
+        <div><div class="wp-btn-lbl">Una — Banco Pichincha</div><div class="wp-btn-sub">Genera código de pago al instante</div></div>
+        <i class="ti ti-chevron-right" style="margin-left:auto;font-size:14px;color:#ccc" aria-hidden="true"></i>
+      </button>
+      <button class="wp-btn" onclick="goFlowDirect('nuvei')">
+        <div class="wp-ico nuvei-ico"><i class="ti ti-credit-card" style="font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="wp-btn-lbl">Tarjeta de crédito / débito</div><div class="wp-btn-sub">Procesado por Nuvei · in-chat</div></div>
+        <i class="ti ti-chevron-right" style="margin-left:auto;font-size:14px;color:#ccc" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div><div class="wts">${ts()}</div>`;
+  chat.appendChild(w);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function addUna() {
+  const code = Math.floor(100000 + Math.random() * 900000);
+  const w = document.createElement('div');
+  w.className = 'wm bot';
+  w.innerHTML = `<div class="w-una">
+    <div class="wu-hdr">
+      <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#fff">U</div>
+      <div><div class="wu-title">Una — Banco Pichincha</div><div class="wu-sub">Código de pago generado</div></div>
+    </div>
+    <div class="wu-body">
+      <div style="font-size:10.5px;color:#667781">Monto a pagar</div>
+      <div style="font-size:22px;font-weight:500;color:#111;margin:4px 0">$38.52</div>
+      <div style="font-size:10px;color:#667781;margin-bottom:8px">Código válido por 15 minutos</div>
+      <div style="font-size:10px;color:#667781">Tu código Una</div>
+      <div class="wu-code">${code}</div>
+      <div class="wu-exp">Vence: ${new Date(Date.now()+15*60000).toLocaleTimeString('es-EC',{hour:'2-digit',minute:'2-digit'})}</div>
+      <div class="wu-tip">📱 Abre la app <b>Una</b> de Banco Pichincha → Pagar → ingresa este código → confirma el pago.</div>
+    </div>
+  </div><div class="wts">${ts()}</div>`;
+  chat.appendChild(w);
+  chat.scrollTop = chat.scrollHeight;
+  setTimeout(() => {
+    addBubble('bot','Una vez que completes el pago en la app, recibirás la confirmación aquí. ¿Deseas continuar?');
+    const chips = addChips([['✓ Ver confirmación','success'],['← Volver al inicio','start']]);
+  }, 1200);
+}
+
+function addNuvei() {
+  const w = document.createElement('div');
+  w.className = 'wm bot';
+  w.innerHTML = `<div class="w-nuvei">
+    <div class="wn-hdr">
+      <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center"><i class="ti ti-credit-card" style="font-size:14px;color:#fff" aria-hidden="true"></i></div>
+      <div><div class="wn-title">Pago con tarjeta · Nuvei</div><div class="wn-sub">Conexión segura TLS 1.3 · PCI-DSS</div></div>
+    </div>
+    <div class="wn-body">
+      <div class="wn-lbl">Número de tarjeta</div>
+      <input class="wn-inp" placeholder="0000 0000 0000 0000" maxlength="19"/>
+      <div class="wn-row">
+        <div><div class="wn-lbl">Vencimiento</div><input class="wn-inp" placeholder="MM/AA"/></div>
+        <div><div class="wn-lbl">CVV</div><input class="wn-inp" placeholder="•••"/></div>
+      </div>
+      <div class="wn-lbl">Nombre en tarjeta</div>
+      <input class="wn-inp" placeholder="Como aparece en la tarjeta"/>
+      <button class="wn-pay" onclick="goFlowDirect('success')">Pagar $38.52 →</button>
+      <div class="wn-secure"><i class="ti ti-lock" aria-hidden="true"></i>Pago 100% in-chat · Procesado por Nuvei</div>
+    </div>
+  </div><div class="wts">${ts()}</div>`;
+  chat.appendChild(w);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function addSuccess() {
+  const order = 'JEP-' + Math.floor(10000 + Math.random()*90000);
+  const w = document.createElement('div');
+  w.className = 'wm bot';
+  w.innerHTML = `<div class="w-ok">
+    <div class="wo-icon"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
+    <div class="wo-title">¡Pago confirmado!</div>
+    <div class="wo-sub">Tu pedido está siendo preparado</div>
+    <div class="wo-num">Orden: <b>${order}</b></div>
+    <div style="font-size:10px;color:#667781;margin-top:6px">Recibirás actualizaciones de tu envío aquí mismo por WhatsApp.</div>
+  </div><div class="wts">${ts()}</div>`;
+  chat.appendChild(w);
+  setTimeout(() => {
+    addBubble('bot','🎉 ¡Gracias por tu compra en JEP Importaciones! Envío a Guayaquil estimado en <b>24-48 horas</b>. ¿Puedo ayudarte con algo más?');
+    addChips([['🔍 Buscar otro repuesto','flow'],['📦 Rastrear pedido',null],['🏠 Menú principal','start']]);
+  }, 1000);
+}
+
+function addChips(pairs) {
+  const row = document.createElement('div');
+  row.className = 'chip-row';
+  pairs.forEach(([label, flow]) => {
+    const c = document.createElement('div');
+    c.className = 'wchip';
+    c.textContent = label;
+    if(flow) c.onclick = () => goFlowDirect(flow);
+    row.appendChild(c);
+  });
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function userSend(val) {
+  const input = document.getElementById('wainput');
+  if(!val.trim()) return;
+  input.value = '';
+  addBubble('user', val);
+  setTimeout(() => {
+    addBubble('bot','Entendido. ¿Puedes darme más detalles sobre la marca y modelo de tu vehículo?');
+  }, 1000);
+}
+
+function ts() {
+  return new Date().toLocaleTimeString('es-EC',{hour:'2-digit',minute:'2-digit'});
+}
+
+goFlow('start');
+document.querySelectorAll('.fbtn')[0].classList.add('active');
+</script>
