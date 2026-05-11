@@ -1,500 +1,698 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="theme-color" content="#075E54"/>
+<title>JEP Importaciones · Agente Conversacional · WDB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-#root{display:grid;grid-template-columns:188px 1fr;gap:14px;padding:12px 0;align-items:start}
-#left{display:flex;flex-direction:column;gap:10px}
-.lcard{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:11px}
-.lsec-title{font-size:9px;font-weight:500;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
-.brand-row{display:flex;align-items:center;gap:7px;margin-bottom:5px}
-.bdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.bname{font-size:12px;font-weight:500;color:var(--color-text-primary)}
-.bsub{font-size:10px;color:var(--color-text-secondary)}
-.fbtn{width:100%;text-align:left;padding:7px 9px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);color:var(--color-text-secondary);font-size:11px;cursor:pointer;display:flex;align-items:center;gap:7px;margin-bottom:5px;transition:all .15s}
-.fbtn:last-child{margin-bottom:0}
-.fbtn:hover,.fbtn.active{border-color:#25D366;color:#075E54;background:#f0fdf4}
-.fbtn i{font-size:13px;flex-shrink:0;color:#25D366}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.sbox{background:var(--color-background-primary);border-radius:var(--border-radius-md);padding:7px;text-align:center}
-.snum{font-size:16px;font-weight:500;color:#075E54}
-.slbl{font-size:9px;color:var(--color-text-secondary);line-height:1.3}
-.pw{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px;background:var(--color-background-primary);text-align:center}
-.pw-logos{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:5px}
-.pw-logo{font-size:10px;font-weight:500;padding:3px 7px;border-radius:4px}
-.pw-wdb{background:#1a1a2e;color:#fff}
-.pw-593{background:#c8102e;color:#fff}
-.pw-jelou{background:#075E54;color:#fff}
-.pw-txt{font-size:9px;color:var(--color-text-tertiary)}
+:root{
+  --wa-dark:#075E54;--wa-mid:#128C7E;--wa-green:#25D366;--wa-light:#DCF8C6;
+  --jep:#c8102e;--jep-dark:#a00d24;
+  --una:#2E7D32;--nuvei:#1565C0;
+  --bg:#f0f2f5;--chat-bg:#ECE5DD;--white:#fff;
+  --text:#111;--muted:#667781;--border:#e0e0e0;
+  --radius:12px;--radius-sm:8px;--radius-xs:6px;
+  --font:'IBM Plex Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;font-family:var(--font);background:var(--bg);overflow-x:hidden}
 
-#phone-wrap{display:flex;justify-content:center}
-#phone{width:320px;border-radius:38px;border:9px solid #111;background:#111;display:flex;flex-direction:column;overflow:hidden}
-.wb-sbar{background:#075E54;padding:5px 16px 3px;display:flex;justify-content:space-between;align-items:center}
-.wb-time{font-size:11px;color:#fff;font-weight:500}
-.wb-icons{display:flex;gap:4px}
-.wb-icons i{font-size:11px;color:#fff}
-.wb-hdr{background:#075E54;padding:10px 12px;display:flex;align-items:center;gap:9px}
-.wb-av{width:34px;height:34px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:500;flex-shrink:0}
-.wb-cn{font-size:13px;font-weight:500;color:#fff}
-.wb-cs{font-size:10px;color:#B2DFDB}
-.wb-hi{display:flex;gap:14px;margin-left:auto}
-.wb-hi i{font-size:18px;color:#fff}
-.wb-body{background:#ECE5DD;flex:1;padding:8px 10px;display:flex;flex-direction:column;gap:7px;min-height:480px;max-height:480px;overflow-y:auto}
-.wb-sep{text-align:center;font-size:9px;color:#667781;background:rgba(255,255,255,.85);border-radius:6px;padding:2px 8px;width:fit-content;margin:0 auto}
-.wm{display:flex;flex-direction:column;max-width:84%}
+/* ── LAYOUT ── */
+#app{display:flex;flex-direction:column;height:100vh;min-height:100dvh}
+
+/* top bar */
+#topbar{background:var(--wa-dark);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:10}
+.top-brand{display:flex;align-items:center;gap:10px}
+.top-logo{width:32px;height:32px;border-radius:8px;background:var(--jep);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600}
+.top-name{font-size:14px;font-weight:600;color:#fff}
+.top-sub{font-size:10px;color:#B2DFDB}
+.top-pills{display:flex;gap:6px}
+.top-pill{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:600;letter-spacing:.03em}
+.pill-wdb{background:#1a1a2e;color:#fff}
+.pill-593{background:var(--jep);color:#fff}
+.pill-jelou{background:rgba(255,255,255,.15);color:#fff;border:0.5px solid rgba(255,255,255,.3)}
+
+/* main area */
+#main{display:flex;flex:1;min-height:0;gap:0}
+
+/* sidebar */
+#sidebar{width:200px;flex-shrink:0;background:#fff;border-right:0.5px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;transition:transform .3s}
+.sb-section{padding:12px 10px 6px}
+.sb-title{font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.sb-btn{width:100%;text-align:left;padding:8px 10px;border-radius:var(--radius-xs);border:0.5px solid var(--border);background:#fff;color:var(--muted);font-size:11px;font-family:var(--font);cursor:pointer;display:flex;align-items:center;gap:8px;margin-bottom:5px;transition:all .15s;line-height:1.3}
+.sb-btn:last-child{margin-bottom:0}
+.sb-btn.active,.sb-btn:hover{border-color:var(--wa-green);color:var(--wa-dark);background:#f0fdf4}
+.sb-btn .sb-icon{font-size:15px;flex-shrink:0}
+.sb-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:4px}
+.ssbox{background:#f8f8f8;border-radius:var(--radius-xs);padding:7px;text-align:center}
+.ssnum{font-size:15px;font-weight:600;color:var(--wa-dark)}
+.sslbl{font-size:9px;color:var(--muted);line-height:1.3}
+.sb-footer{margin-top:auto;padding:10px;border-top:0.5px solid var(--border)}
+.sb-footer-logos{display:flex;justify-content:center;gap:5px;margin-bottom:5px}
+.sfl{font-size:9px;font-weight:600;padding:2px 6px;border-radius:3px}
+.sfl-w{background:#1a1a2e;color:#fff}
+.sfl-5{background:var(--jep);color:#fff}
+.sfl-j{background:var(--wa-dark);color:#fff}
+.sb-footer-txt{font-size:9px;color:#aaa;text-align:center}
+
+/* mobile sidebar toggle */
+#sb-toggle{display:none;position:fixed;bottom:80px;left:12px;z-index:100;width:38px;height:38px;border-radius:50%;background:var(--jep);border:none;color:#fff;font-size:18px;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+
+/* phone area */
+#phone-area{flex:1;display:flex;align-items:center;justify-content:center;padding:16px;min-height:0;overflow:hidden}
+
+#phone-frame{
+  width:min(340px, calc(100vw - 32px));
+  height:min(620px, calc(100vh - 120px));
+  border-radius:36px;
+  border:8px solid #1a1a1a;
+  background:#1a1a1a;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  flex-shrink:0;
+  position:relative;
+}
+
+/* WA UI */
+.wa-sbar{background:var(--wa-dark);padding:5px 14px 3px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.wa-sbar-time{font-size:11px;color:#fff;font-weight:600}
+.wa-sbar-icons{display:flex;gap:5px;align-items:center;font-size:11px;color:#fff}
+
+.wa-hdr{background:var(--wa-dark);padding:10px 12px;display:flex;align-items:center;gap:9px;flex-shrink:0}
+.wa-av{width:34px;height:34px;border-radius:50%;background:var(--jep);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;flex-shrink:0}
+.wa-cn{font-size:13px;font-weight:600;color:#fff}
+.wa-cs{font-size:10px;color:#B2DFDB;display:flex;align-items:center;gap:4px}
+.wa-online{width:6px;height:6px;border-radius:50%;background:var(--wa-green)}
+.wa-hicons{display:flex;gap:14px;margin-left:auto;font-size:18px;color:#fff}
+
+.wa-body{background:var(--chat-bg);flex:1;padding:8px 10px;display:flex;flex-direction:column;gap:7px;overflow-y:auto;min-height:0}
+
+.wa-sep{text-align:center;font-size:9px;color:var(--muted);background:rgba(255,255,255,.85);border-radius:6px;padding:2px 8px;width:fit-content;margin:0 auto}
+
+.wm{display:flex;flex-direction:column;max-width:85%}
 .wm.bot{align-self:flex-start}
 .wm.user{align-self:flex-end}
-.wb{padding:7px 10px;border-radius:8px;font-size:11.5px;line-height:1.55;color:#111}
-.wm.bot .wb{background:#fff;border-top-left-radius:0}
-.wm.user .wb{background:#DCF8C6;border-top-right-radius:0}
-.wts{font-size:9px;color:#999;text-align:right;margin-top:2px}
+.wb{padding:7px 10px;border-radius:var(--radius-sm);font-size:12px;line-height:1.55;color:var(--text)}
+.wm.bot .wb{background:var(--white);border-top-left-radius:0}
+.wm.user .wb{background:var(--wa-light);border-top-right-radius:0}
+.wts{font-size:9px;color:var(--muted);text-align:right;margin-top:2px}
 
-.w-list{background:#fff;border-radius:8px;overflow:hidden;border:0.5px solid #ddd;width:100%}
-.wl-hdr{padding:8px 10px;font-size:11px;font-weight:500;color:#111;border-bottom:0.5px solid #eee}
+/* list msg */
+.w-list{background:var(--white);border-radius:var(--radius-sm);overflow:hidden;border:0.5px solid var(--border);width:100%}
+.wl-hdr{padding:8px 10px;font-size:11.5px;font-weight:600;color:var(--text);border-bottom:0.5px solid #eee}
 .wl-item{padding:8px 10px;border-bottom:0.5px solid #f2f2f2;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .12s}
 .wl-item:last-child{border-bottom:none}
 .wl-item:hover{background:#f9fef9}
-.wl-t{font-size:11px;color:#111;font-weight:500}
-.wl-d{font-size:9.5px;color:#667781}
-.wl-arr{font-size:13px;color:#25D366}
+.wl-t{font-size:11px;color:var(--text);font-weight:500}
+.wl-d{font-size:9.5px;color:var(--muted)}
+.wl-arr{font-size:14px;color:var(--wa-green)}
 
-.w-flow{background:#fff;border-radius:10px;overflow:hidden;border:0.5px solid #ddd;width:100%}
-.wf-top{background:#075E54;padding:9px 11px;display:flex;align-items:center;gap:7px}
-.wf-meta{font-size:9px;color:#B2DFDB;display:flex;align-items:center;gap:4px}
-.wf-meta i{font-size:10px}
-.wf-title{font-size:12px;font-weight:500;color:#fff}
+/* wa flow */
+.w-flow{background:var(--white);border-radius:10px;overflow:hidden;border:0.5px solid var(--border);width:100%}
+.wf-top{background:var(--wa-dark);padding:9px 11px;display:flex;align-items:center;gap:8px}
+.wf-av{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.wf-title{font-size:12px;font-weight:600;color:#fff}
 .wf-sub{font-size:9.5px;color:#B2DFDB}
+.wf-meta-badge{margin-left:auto;font-size:8.5px;color:#B2DFDB;border:0.5px solid rgba(255,255,255,.3);border-radius:4px;padding:2px 6px;white-space:nowrap}
 .wf-body{padding:10px}
-.wf-lbl{font-size:9.5px;color:#667781;margin-bottom:3px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
-.wf-sel{width:100%;padding:7px 9px;border-radius:6px;border:0.5px solid #ccc;background:#fafafa;font-size:11px;margin-bottom:8px;color:#111}
-.wf-inp{width:100%;padding:7px 9px;border-radius:6px;border:0.5px solid #ccc;background:#fafafa;font-size:11px;margin-bottom:8px;color:#111}
-.wf-submit{width:100%;padding:9px;background:#25D366;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;margin-top:2px}
-.wf-submit:hover{background:#1db954}
+.wf-lbl{font-size:9.5px;color:var(--muted);margin-bottom:3px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.wf-sel{width:100%;padding:7px 9px;border-radius:var(--radius-xs);border:0.5px solid #ccc;background:#fafafa;font-size:11px;margin-bottom:8px;color:var(--text);font-family:var(--font)}
+.wf-submit{width:100%;padding:9px;background:var(--wa-green);color:#fff;border:none;border-radius:var(--radius-xs);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)}
+.wf-submit:hover{background:var(--wa-mid)}
 
-.w-catalog{background:#fff;border-radius:8px;overflow:hidden;border:0.5px solid #ddd;width:100%}
-.wc-hdr{padding:8px 10px;border-bottom:0.5px solid #eee;font-size:11px;font-weight:500;color:#111;display:flex;align-items:center;gap:6px}
-.wc-hdr i{font-size:13px;color:#25D366}
+/* catalog */
+.w-catalog{background:var(--white);border-radius:var(--radius-sm);overflow:hidden;border:0.5px solid var(--border);width:100%}
+.wc-hdr{padding:8px 10px;border-bottom:0.5px solid #eee;font-size:11px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px}
+.wc-hdr-badge{font-size:8.5px;background:#E8F5E9;color:#2E7D32;padding:2px 6px;border-radius:4px;font-weight:600;margin-left:auto}
 .wc-item{padding:8px 10px;display:flex;gap:8px;border-bottom:0.5px solid #f5f5f5;align-items:center}
 .wc-item:last-child{border-bottom:none}
-.wc-img{width:42px;height:42px;border-radius:6px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
-.wc-name{font-size:10.5px;font-weight:500;color:#111;line-height:1.3}
-.wc-ref{font-size:9px;color:#999}
-.wc-price{font-size:12px;font-weight:500;color:#075E54}
-.wc-stk{font-size:9px;color:#25D366}
-.wc-add{margin-left:auto;padding:5px 9px;background:#25D366;color:#fff;border:none;border-radius:5px;font-size:10px;cursor:pointer;flex-shrink:0;font-weight:500}
+.wc-img{width:42px;height:42px;border-radius:var(--radius-xs);background:#f5f5f5;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.wc-name{font-size:10.5px;font-weight:600;color:var(--text);line-height:1.3}
+.wc-ref{font-size:9px;color:#aaa}
+.wc-price{font-size:12px;font-weight:600;color:var(--wa-dark)}
+.wc-stk{font-size:9px;color:var(--wa-green)}
+.wc-add{margin-left:auto;padding:5px 9px;background:var(--wa-green);color:#fff;border:none;border-radius:5px;font-size:10px;cursor:pointer;flex-shrink:0;font-weight:600;font-family:var(--font)}
 
-.w-pay{background:#fff;border-radius:10px;overflow:hidden;border:0.5px solid #ddd;width:100%}
-.wp-hdr{padding:9px 12px;background:#f8f8f8;border-bottom:0.5px solid #eee;font-size:11.5px;font-weight:500;color:#111;display:flex;align-items:center;gap:6px}
-.wp-hdr i{font-size:14px;color:#075E54}
+/* payment */
+.w-pay{background:var(--white);border-radius:10px;overflow:hidden;border:0.5px solid var(--border);width:100%}
+.wp-hdr{padding:9px 12px;background:#f8f8f8;border-bottom:0.5px solid #eee;font-size:11.5px;font-weight:600;color:var(--text)}
 .wp-sum{padding:8px 12px;border-bottom:0.5px solid #eee}
-.wp-row{display:flex;justify-content:space-between;font-size:10.5px;color:#667781;margin-bottom:3px}
-.wp-total{display:flex;justify-content:space-between;font-size:13px;font-weight:500;color:#111;padding:8px 12px;border-bottom:0.5px solid #eee}
+.wp-row{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-bottom:3px}
+.wp-total{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--text);padding:8px 12px;border-bottom:0.5px solid #eee}
 .wp-methods{padding:8px 12px;display:flex;flex-direction:column;gap:6px}
-.wp-label{font-size:9.5px;color:#667781;margin-bottom:2px;text-transform:uppercase;letter-spacing:.04em}
-.wp-btn{width:100%;padding:9px 11px;border-radius:8px;border:0.5px solid #e0e0e0;background:#fff;cursor:pointer;display:flex;align-items:center;gap:9px;transition:background .15s}
+.wp-lbl{font-size:9.5px;color:var(--muted);margin-bottom:2px;text-transform:uppercase;letter-spacing:.04em}
+.wp-btn{width:100%;padding:9px 11px;border-radius:var(--radius-sm);border:0.5px solid var(--border);background:var(--white);cursor:pointer;display:flex;align-items:center;gap:9px;transition:background .15s;font-family:var(--font)}
 .wp-btn:hover{background:#f5f5f5}
-.wp-ico{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:500}
-.una-ico{background:#E8F5E9;color:#2E7D32}
-.nuvei-ico{background:#E3F2FD;color:#1565C0}
-.wp-btn-lbl{font-size:11px;font-weight:500;color:#111}
-.wp-btn-sub{font-size:9.5px;color:#667781}
+.wp-ico{width:30px;height:30px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:600}
+.una-ico{background:#E8F5E9;color:var(--una)}
+.nuvei-ico{background:#E3F2FD;color:var(--nuvei)}
+.wp-btn-lbl{font-size:11px;font-weight:600;color:var(--text)}
+.wp-btn-sub{font-size:9.5px;color:var(--muted)}
+.wp-arr{margin-left:auto;font-size:14px;color:#ccc}
 
-.w-una{background:#fff;border-radius:10px;overflow:hidden;border:0.5px solid #ddd;width:100%}
-.wu-hdr{background:#2E7D32;padding:9px 12px;display:flex;align-items:center;gap:8px}
-.wu-title{font-size:12px;font-weight:500;color:#fff}
+/* una */
+.w-una{background:var(--white);border-radius:10px;overflow:hidden;border:0.5px solid var(--border);width:100%}
+.wu-hdr{background:var(--una);padding:9px 12px;display:flex;align-items:center;gap:8px}
+.wu-av{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.wu-title{font-size:12px;font-weight:600;color:#fff}
 .wu-sub{font-size:9.5px;color:#A5D6A7}
 .wu-body{padding:12px;text-align:center}
-.wu-code{font-size:22px;font-weight:500;color:#2E7D32;letter-spacing:4px;margin:6px 0}
-.wu-exp{font-size:10px;color:#667781}
-.wu-tip{font-size:10px;color:#555;margin-top:8px;background:#F1F8E9;border-radius:6px;padding:7px 9px;text-align:left}
+.wu-monto-lbl{font-size:10px;color:var(--muted)}
+.wu-monto{font-size:22px;font-weight:700;color:var(--text);margin:3px 0 8px}
+.wu-code-lbl{font-size:10px;color:var(--muted);margin-bottom:4px}
+.wu-code{font-size:24px;font-weight:700;color:var(--una);letter-spacing:5px;border:1.5px dashed #A5D6A7;border-radius:8px;padding:8px 12px;display:inline-block;margin-bottom:4px}
+.wu-exp{font-size:10px;color:var(--muted)}
+.wu-tip{font-size:10px;color:#444;margin-top:8px;background:#F1F8E9;border-radius:6px;padding:8px 10px;text-align:left;line-height:1.5}
 
-.w-nuvei{background:#fff;border-radius:10px;overflow:hidden;border:0.5px solid #ddd;width:100%}
-.wn-hdr{background:#1565C0;padding:9px 12px;display:flex;align-items:center;gap:8px}
-.wn-title{font-size:12px;font-weight:500;color:#fff}
+/* nuvei */
+.w-nuvei{background:var(--white);border-radius:10px;overflow:hidden;border:0.5px solid var(--border);width:100%}
+.wn-hdr{background:var(--nuvei);padding:9px 12px;display:flex;align-items:center;gap:8px}
+.wn-av{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;flex-shrink:0}
+.wn-title{font-size:12px;font-weight:600;color:#fff}
 .wn-sub{font-size:9.5px;color:#90CAF9}
 .wn-body{padding:10px}
-.wn-lbl{font-size:9.5px;color:#667781;margin-bottom:3px;font-weight:500}
-.wn-inp{width:100%;padding:7px 9px;border-radius:6px;border:0.5px solid #ccc;background:#fafafa;font-size:11px;margin-bottom:7px;color:#111}
+.wn-lbl{font-size:9.5px;color:var(--muted);margin-bottom:3px;font-weight:500}
+.wn-inp{width:100%;padding:7px 9px;border-radius:var(--radius-xs);border:0.5px solid #ccc;background:#fafafa;font-size:11px;margin-bottom:7px;color:var(--text);font-family:var(--font)}
 .wn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.wn-pay{width:100%;padding:9px;background:#1565C0;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;margin-top:4px}
+.wn-pay{width:100%;padding:9px;background:var(--nuvei);color:#fff;border:none;border-radius:var(--radius-xs);font-size:12px;font-weight:600;cursor:pointer;margin-top:4px;font-family:var(--font)}
 .wn-pay:hover{background:#1976D2}
-.wn-secure{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:7px;font-size:9.5px;color:#999}
-.wn-secure i{font-size:11px}
+.wn-secure{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:7px;font-size:9.5px;color:#aaa}
 
-.w-ok{background:#fff;border-radius:10px;overflow:hidden;border:0.5px solid #ddd;width:100%;text-align:center;padding:16px 12px}
-.wo-icon{width:46px;height:46px;border-radius:50%;background:#E8F5E9;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:20px;color:#2E7D32}
-.wo-title{font-size:13px;font-weight:500;color:#111;margin-bottom:3px}
-.wo-sub{font-size:10.5px;color:#667781}
-.wo-num{font-size:11px;color:#075E54;margin-top:6px;font-weight:500}
+/* success */
+.w-ok{background:var(--white);border-radius:10px;overflow:hidden;border:0.5px solid var(--border);width:100%;text-align:center;padding:16px 12px}
+.wo-icon{width:46px;height:46px;border-radius:50%;background:#E8F5E9;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:22px}
+.wo-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
+.wo-sub{font-size:10.5px;color:var(--muted)}
+.wo-num{font-size:11px;color:var(--wa-dark);margin-top:6px;font-weight:600}
 
-.chip-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.wchip{padding:5px 10px;border-radius:14px;border:0.5px solid #25D366;color:#075E54;font-size:10.5px;background:#fff;cursor:pointer;transition:background .12s}
+/* chips */
+.chip-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.wchip{padding:5px 11px;border-radius:14px;border:0.5px solid var(--wa-green);color:var(--wa-dark);font-size:10.5px;background:var(--white);cursor:pointer;font-family:var(--font);transition:background .12s}
 .wchip:hover{background:#f0fdf4}
 
-.wb-ibar{background:#f0f0f0;padding:8px 10px;display:flex;align-items:center;gap:7px;border-top:0.5px solid #ccc}
-.wb-inp{flex:1;padding:6px 11px;border-radius:18px;border:none;background:#fff;font-size:11px;color:#111;outline:none}
-.wb-send{width:30px;height:30px;border-radius:50%;background:#25D366;border:none;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.wb-send i{font-size:13px}
-.typing{display:flex;gap:3px;padding:8px 12px;align-items:center}
-.td{width:5px;height:5px;border-radius:50%;background:#999;animation:bop 1.2s infinite}
+/* typing */
+.typing-wrap{display:flex;gap:3px;align-items:center;padding:8px 12px;background:var(--white);border-radius:var(--radius-sm);border-top-left-radius:0;width:fit-content}
+.td{width:5px;height:5px;border-radius:50%;background:#aaa;animation:bop 1.2s infinite}
 .td:nth-child(2){animation-delay:.2s}
 .td:nth-child(3){animation-delay:.4s}
 @keyframes bop{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+
+/* input bar */
+.wa-ibar{background:#f0f0f0;padding:8px 10px;display:flex;align-items:center;gap:7px;border-top:0.5px solid #ccc;flex-shrink:0}
+.wa-input{flex:1;padding:7px 12px;border-radius:20px;border:none;background:var(--white);font-size:12px;color:var(--text);outline:none;font-family:var(--font)}
+.wa-send{width:32px;height:32px;border-radius:50%;background:var(--wa-green);border:none;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;flex-shrink:0}
+
+/* bottom controls */
+#controls{background:#fff;border-top:0.5px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.ctrl-scene{font-size:11px;color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctrl-btn{padding:8px 16px;border-radius:20px;border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:6px;transition:all .15s;white-space:nowrap}
+.ctrl-repeat{background:#f0f0f0;color:var(--muted)}
+.ctrl-repeat:hover{background:#e0e0e0}
+.ctrl-next{background:var(--jep);color:#fff}
+.ctrl-next:hover{background:var(--jep-dark)}
+.ctrl-next:disabled{background:#ccc;cursor:not-allowed}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  #sidebar{display:none;position:fixed;left:0;top:0;height:100%;z-index:200;width:220px;transform:translateX(-100%)}
+  #sidebar.open{display:flex;transform:translateX(0)}
+  #sb-toggle{display:flex}
+  #phone-area{padding:8px}
+  #phone-frame{
+    width:100%;
+    height:calc(100vh - 120px);
+    border-radius:0;
+    border:none;
+    border-radius:24px;
+  }
+  #controls{padding:8px 12px;gap:8px}
+  .ctrl-btn{padding:8px 12px;font-size:11px}
+  .top-pills{display:none}
+}
+@media(min-width:601px) and (max-width:900px){
+  #sidebar{width:160px}
+  .sb-btn{font-size:10px;padding:7px 8px}
+  #phone-frame{
+    width:min(300px, calc(100vw - 200px));
+    height:min(580px, calc(100vh - 130px));
+  }
+}
+@media(min-width:901px){
+  #phone-frame{
+    width:320px;
+    height:min(620px, calc(100vh - 130px));
+  }
+}
 </style>
+</head>
+<body>
+<div id="app">
 
-<h2 class="sr-only">Demo interactivo de WhatsApp para JEP Importaciones — construido por WDB y 593IA sobre plataforma Jelou, con flows nativos de Meta, catálogo nativo y pagos in-chat vía Una y Nuvei</h2>
-
-<div id="root">
-  <div id="left">
-    <div class="lcard">
-      <div class="lsec-title">Equipo</div>
-      <div class="brand-row"><div class="bdot" style="background:#1a1a2e"></div><div><div class="bname">WDB</div><div class="bsub">Presenta</div></div></div>
-      <div class="brand-row"><div class="bdot" style="background:#c8102e"></div><div><div class="bname">593IA</div><div class="bsub">Arquitecto</div></div></div>
-      <div class="brand-row"><div class="bdot" style="background:#075E54"></div><div><div class="bname">Jelou</div><div class="bsub">Plataforma</div></div></div>
-    </div>
-
-    <div class="lcard">
-      <div class="lsec-title">Flujos del demo</div>
-      <button class="fbtn active" onclick="goFlow('start')"><i class="ti ti-message-circle" aria-hidden="true"></i>Bienvenida</button>
-      <button class="fbtn" onclick="goFlow('flow')"><i class="ti ti-layout-list" aria-hidden="true"></i>WA Flow — búsqueda</button>
-      <button class="fbtn" onclick="goFlow('catalog')"><i class="ti ti-shopping-bag" aria-hidden="true"></i>Catálogo nativo</button>
-      <button class="fbtn" onclick="goFlow('payment')"><i class="ti ti-credit-card" aria-hidden="true"></i>Selección de pago</button>
-      <button class="fbtn" onclick="goFlow('una')"><i class="ti ti-building-bank" aria-hidden="true"></i>Una — Banco Pichincha</button>
-      <button class="fbtn" onclick="goFlow('nuvei')"><i class="ti ti-credit-card" aria-hidden="true"></i>Tarjeta — Nuvei</button>
-      <button class="fbtn" onclick="goFlow('success')"><i class="ti ti-circle-check" aria-hidden="true"></i>Confirmación</button>
-    </div>
-
-    <div class="lcard">
-      <div class="lsec-title">Métricas</div>
-      <div class="stat-grid">
-        <div class="sbox"><div class="snum">94%</div><div class="slbl">Satisfacción</div></div>
-        <div class="sbox"><div class="snum">2m</div><div class="slbl">Resp. prom.</div></div>
-        <div class="sbox"><div class="snum">5.6k</div><div class="slbl">Chats/mes</div></div>
-        <div class="sbox"><div class="snum">68%</div><div class="slbl">Auto-resuelto</div></div>
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <div class="top-brand">
+      <div class="top-logo">JEP</div>
+      <div>
+        <div class="top-name">JEP Importaciones</div>
+        <div class="top-sub">Agente Conversacional · WhatsApp · Jelou</div>
       </div>
     </div>
-
-    <div class="pw">
-      <div class="pw-logos">
-        <span class="pw-logo pw-wdb">WDB</span>
-        <span style="font-size:10px;color:var(--color-text-tertiary)">×</span>
-        <span class="pw-logo pw-593">593IA</span>
-        <span style="font-size:10px;color:var(--color-text-tertiary)">×</span>
-        <span class="pw-logo pw-jelou">Jelou</span>
-      </div>
-      <div class="pw-txt">Demo para JEP Importaciones</div>
+    <div class="top-pills">
+      <span class="top-pill pill-wdb">WDB</span>
+      <span class="top-pill pill-593">593IA</span>
+      <span class="top-pill pill-jelou">Jelou</span>
     </div>
   </div>
 
-  <div id="phone-wrap">
-    <div id="phone">
-      <div class="wb-sbar">
-        <span class="wb-time">9:41</span>
-        <div class="wb-icons"><i class="ti ti-wifi" aria-hidden="true"></i><i class="ti ti-battery" aria-hidden="true"></i></div>
-      </div>
-      <div class="wb-hdr">
-        <i class="ti ti-arrow-left" style="color:#fff;font-size:18px" aria-hidden="true"></i>
-        <div class="wb-av">JEP</div>
-        <div style="flex:1"><div class="wb-cn">JEP Importaciones</div><div class="wb-cs"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#25D366;margin-right:4px;vertical-align:middle"></span>en línea</div></div>
-        <div class="wb-hi"><i class="ti ti-video" aria-hidden="true"></i><i class="ti ti-phone" aria-hidden="true"></i><i class="ti ti-dots-vertical" aria-hidden="true"></i></div>
-      </div>
+  <!-- MAIN -->
+  <div id="main">
 
-      <div class="wb-body" id="chat"></div>
-
-      <div class="wb-ibar">
-        <i class="ti ti-mood-smile" style="font-size:20px;color:#667781" aria-hidden="true"></i>
-        <input class="wb-inp" id="wainput" placeholder="Escribe un mensaje..." onkeydown="if(event.key==='Enter')userSend(this.value)"/>
-        <button class="wb-send" onclick="userSend(document.getElementById('wainput').value)" aria-label="Enviar"><i class="ti ti-send" aria-hidden="true"></i></button>
+    <!-- SIDEBAR -->
+    <div id="sidebar">
+      <div class="sb-section">
+        <div class="sb-title">Flujos del demo</div>
+        <button class="sb-btn active" data-scene="0" onclick="jumpScene(0,this)"><span class="sb-icon">👋</span>Bienvenida</button>
+        <button class="sb-btn" data-scene="1" onclick="jumpScene(1,this)"><span class="sb-icon">📋</span>WA Flow búsqueda</button>
+        <button class="sb-btn" data-scene="2" onclick="jumpScene(2,this)"><span class="sb-icon">📦</span>Catálogo Meta</button>
+        <button class="sb-btn" data-scene="3" onclick="jumpScene(3,this)"><span class="sb-icon">💳</span>Selección pago</button>
+        <button class="sb-btn" data-scene="4" onclick="jumpScene(4,this)"><span class="sb-icon">🏦</span>Una · Bco. Pichincha</button>
+        <button class="sb-btn" data-scene="5" onclick="jumpScene(5,this)"><span class="sb-icon">💳</span>Tarjeta · Nuvei</button>
+        <button class="sb-btn" data-scene="6" onclick="jumpScene(6,this)"><span class="sb-icon">✅</span>Confirmación</button>
+      </div>
+      <div class="sb-section">
+        <div class="sb-title">Métricas</div>
+        <div class="sb-stat-grid">
+          <div class="ssbox"><div class="ssnum">94%</div><div class="sslbl">Satisfacción</div></div>
+          <div class="ssbox"><div class="ssnum">2m</div><div class="sslbl">Resp. prom.</div></div>
+          <div class="ssbox"><div class="ssnum">5.6k</div><div class="sslbl">Chats/mes</div></div>
+          <div class="ssbox"><div class="ssnum">68%</div><div class="sslbl">Auto-resuelto</div></div>
+        </div>
+      </div>
+      <div class="sb-footer">
+        <div class="sb-footer-logos">
+          <span class="sfl sfl-w">WDB</span>
+          <span class="sfl sfl-5">593IA</span>
+          <span class="sfl sfl-j">Jelou</span>
+        </div>
+        <div class="sb-footer-txt">Demo · JEP Importaciones</div>
       </div>
     </div>
+
+    <!-- PHONE -->
+    <div id="phone-area">
+      <div id="phone-frame">
+        <div class="wa-sbar">
+          <span class="wa-sbar-time" id="clock">9:41</span>
+          <div class="wa-sbar-icons">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6l5 5 5-5"/><path d="M1 1h10v10"/></svg>
+            🔋
+          </div>
+        </div>
+        <div class="wa-hdr">
+          <span style="color:#fff;font-size:20px;margin-right:2px">‹</span>
+          <div class="wa-av">JEP</div>
+          <div style="flex:1">
+            <div class="wa-cn">JEP Importaciones</div>
+            <div class="wa-cs"><div class="wa-online"></div>en línea</div>
+          </div>
+          <div class="wa-hicons">
+            <span>📹</span><span>📞</span><span>⋮</span>
+          </div>
+        </div>
+        <div class="wa-body" id="chat"></div>
+        <div class="wa-ibar">
+          <span style="font-size:20px;color:#667781">☺</span>
+          <input class="wa-input" id="wainput" placeholder="Escribe un mensaje..." onkeydown="if(event.key==='Enter'){userType(this.value);this.value=''}"/>
+          <button class="wa-send" onclick="var i=document.getElementById('wainput');userType(i.value);i.value=''">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div id="controls">
+    <div class="ctrl-scene" id="scene-label">Hoy · Demo en vivo · WDB / 593IA para JEP Importaciones</div>
+    <button class="ctrl-btn ctrl-repeat" onclick="repeatScene()">↺ Repetir</button>
+    <button class="ctrl-btn ctrl-next" id="next-btn" onclick="nextStep()">▶ Siguiente paso</button>
   </div>
 </div>
 
+<!-- MOBILE SIDEBAR TOGGLE -->
+<button id="sb-toggle" onclick="toggleSidebar()" aria-label="Menú">☰</button>
+
 <script>
-const chat = document.getElementById('chat');
+// ── CLOCK ──
+function tick(){
+  const n=new Date();
+  document.getElementById('clock').textContent=n.toLocaleTimeString('es-EC',{hour:'2-digit',minute:'2-digit'});
+}
+tick(); setInterval(tick,30000);
+
+// ── SIDEBAR MOBILE ──
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+}
+document.addEventListener('click',e=>{
+  const sb=document.getElementById('sidebar');
+  const tog=document.getElementById('sb-toggle');
+  if(sb.classList.contains('open')&&!sb.contains(e.target)&&!tog.contains(e.target)){
+    sb.classList.remove('open');
+  }
+});
+
+// ── SCENES ──
+const SCENES = [
+  // 0 — Bienvenida
+  {
+    label:'Escena 1 · Bienvenida JEP Importaciones',
+    steps:[
+      {type:'sep',text:'Hoy · Demo en vivo'},
+      {type:'bot',text:'👋 ¡Hola! Soy el asistente virtual de <b>JEP Importaciones</b>.<br><br>Tenemos más de <b>5,696 repuestos</b> de carrocería, iluminación y refrigeración. ¿En qué te puedo ayudar hoy?'},
+      {type:'list',header:'¿Qué deseas hacer?',items:[
+        {t:'🔍 Buscar un repuesto',d:'Por marca, modelo y año',scene:1},
+        {t:'📦 Ver catálogo',d:'Explorar productos disponibles',scene:2},
+        {t:'🚚 Consultar envíos',d:'Tiempos y cobertura',resp:'Hacemos envíos a todo Ecuador. Quito y Guayaquil en 24h, resto del país en 48–72h. ¿Te ayudo con algo más?'},
+        {t:'👤 Hablar con asesor',d:'Transferir a un humano',resp:'Conectándote con un asesor JEP... Tiempo estimado: ~2 min. También puedes escribirnos al 099 614 5457.'}
+      ]}
+    ]
+  },
+  // 1 — WA Flow
+  {
+    label:'Escena 2 · WhatsApp Flow nativo de Meta',
+    steps:[
+      {type:'bot',text:'Abriendo el buscador de repuestos 🔍<br>Usa el formulario nativo de WhatsApp:'},
+      {type:'waflow'}
+    ]
+  },
+  // 2 — Catálogo
+  {
+    label:'Escena 3 · Catálogo nativo Meta Business',
+    steps:[
+      {type:'user',text:'✓ Formulario enviado · Chevrolet Aveo 2012 · Guardachoque Delantero'},
+      {type:'bot',text:'Encontré <b>3 opciones</b> en el catálogo de Meta para tu búsqueda 📦'},
+      {type:'catalog'}
+    ]
+  },
+  // 3 — Pago
+  {
+    label:'Escena 4 · Selección de método de pago',
+    steps:[
+      {type:'user',text:'Agregar al carrito: Guardachoque Del. Chevrolet Aveo'},
+      {type:'bot',text:'¡Perfecto! Aquí está el resumen de tu pedido 🛒'},
+      {type:'payment'}
+    ]
+  },
+  // 4 — Una
+  {
+    label:'Escena 5 · Pago vía Una · Banco Pichincha',
+    steps:[
+      {type:'user',text:'Pagar con Una — Banco Pichincha'},
+      {type:'bot',text:'Generando tu código de pago Una... ⏳'},
+      {type:'una'}
+    ]
+  },
+  // 5 — Nuvei
+  {
+    label:'Escena 6 · Pago con tarjeta · Nuvei in-chat',
+    steps:[
+      {type:'user',text:'Pagar con tarjeta de crédito'},
+      {type:'bot',text:'Abriendo formulario de pago seguro vía Nuvei 🔒'},
+      {type:'nuvei'}
+    ]
+  },
+  // 6 — Éxito
+  {
+    label:'Escena 7 · Confirmación y seguimiento',
+    steps:[
+      {type:'user',text:'Pagar $38.52'},
+      {type:'bot',text:'Procesando pago... ⏳'},
+      {type:'success'}
+    ]
+  }
+];
+
+let currentScene = 0;
+let currentStep = 0;
 let busy = false;
 
-const FLOWS = {
-  start: [
-    {type:'sep', text:'Hoy'},
-    {type:'bot', text:'👋 ¡Hola! Soy el asistente de <b>JEP Importaciones</b>.\n\nTenemos más de <b>5,696 repuestos</b> de carrocería, iluminación y refrigeración. ¿En qué te puedo ayudar?'},
-    {type:'list', header:'¿Qué deseas hacer?', items:[
-      {t:'🔍 Buscar un repuesto', d:'Por marca, modelo y año', flow:'flow'},
-      {t:'📦 Ver catálogo', d:'Explorar productos disponibles', flow:'catalog'},
-      {t:'🚚 Consultar envíos', d:'Tiempos y cobertura', flow:null, resp:'Hacemos envíos a todo Ecuador. Quito y Guayaquil en 24h, resto del país en 48-72h. ¿Te ayudo con algo más?'},
-      {t:'👤 Hablar con asesor', d:'Transferir a humano', flow:null, resp:'Transfiriéndote con un asesor JEP... Tiempo estimado: ~2 min. También puedes escribirnos al 099 614 5457.'}
-    ]}
-  ],
-  flow: [
-    {type:'bot', text:'Voy a abrir el buscador de repuestos 🔍'},
-    {type:'waflow', title:'Buscar repuesto', sub:'Paso 1 de 2 · Datos del vehículo', fields:[
-      {label:'Marca', type:'select', opts:['Chevrolet','Toyota','Hyundai','Kia','Nissan','Mazda','Suzuki','Renault','Ford','Mitsubishi']},
-      {label:'Modelo', type:'select', opts:['Aveo','Corolla','Tucson','Sportage','Sentra B15','CX-5','Grand Vitara','Duster','Ranger','L200']},
-      {label:'Año', type:'select', opts:['2024','2023','2022','2021','2020','2019','2018','2017','2016','2015','2014','2013']},
-      {label:'Tipo de repuesto', type:'select', opts:['Guardachoque Delantero','Guardachoque Posterior','Guardafango','Capót','Retrovisor','Mascarilla','Puerta','Panel Delantero']}
-    ], next:'catalog'}
-  ],
-  catalog: [
-    {type:'bot', text:'Aquí tienes los resultados del catálogo de Meta para tu búsqueda 📦'},
-    {type:'catalog', items:[
-      {emoji:'🚗', name:'Guardachoque Del. Chevrolet Aveo 2010/2014', ref:'CV04089EA', price:'$34.62', stock:'Disponible'},
-      {emoji:'🚙', name:'Guardafango Der. Chevrolet Aveo 2004/2010', ref:'CV11024B', price:'$28.50', stock:'Disponible'},
-      {emoji:'🚕', name:'Capót Chevrolet Aveo Emotion 2009/2014', ref:'CV05031GA', price:'$87.40', stock:'Últimas 3 unidades'}
-    ], next:'payment'}
-  ],
-  payment: [
-    {type:'user', text:'Agregar al carrito: Guardachoque Del. Chevrolet Aveo'},
-    {type:'bot', text:'¡Perfecto! Resumen de tu pedido 🛒'},
-    {type:'payment'}
-  ],
-  una: [
-    {type:'user', text:'Pagar con Una — Banco Pichincha'},
-    {type:'bot', text:'Generando tu código de pago Una... ⏳'},
-    {type:'una'}
-  ],
-  nuvei: [
-    {type:'user', text:'Pagar con tarjeta de crédito'},
-    {type:'bot', text:'Abriendo formulario de pago seguro vía Nuvei 🔒'},
-    {type:'nuvei'}
-  ],
-  success: [
-    {type:'user', text:'Pagar $38.52'},
-    {type:'bot', text:'Procesando pago... ⏳'},
-    {type:'success'}
-  ]
-};
-
-function goFlow(key) {
-  if(busy) return;
-  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
-  event.currentTarget.classList.add('active');
-  chat.innerHTML = '';
-  const steps = FLOWS[key];
-  if(!steps) return;
-  renderSteps(steps, 0);
+function ts(){
+  return new Date().toLocaleTimeString('es-EC',{hour:'2-digit',minute:'2-digit'});
 }
 
-function renderSteps(steps, i) {
-  if(i >= steps.length) return;
-  const s = steps[i];
-  const delay = i === 0 ? 0 : 600;
-  setTimeout(() => {
-    if(s.type === 'sep') {
-      const d = document.createElement('div');
-      d.className = 'wb-sep'; d.textContent = s.text;
-      chat.appendChild(d);
-      renderSteps(steps, i+1);
-    } else if(s.type === 'bot') {
-      showTypingThen(() => {
-        addBubble('bot', s.text);
-        renderSteps(steps, i+1);
-      });
-    } else if(s.type === 'user') {
-      addBubble('user', s.text);
-      renderSteps(steps, i+1);
-    } else if(s.type === 'list') {
-      showTypingThen(() => {
-        addList(s);
-        renderSteps(steps, i+1);
-      });
-    } else if(s.type === 'waflow') {
-      showTypingThen(() => {
-        addWAFlow(s);
-        renderSteps(steps, i+1);
-      });
-    } else if(s.type === 'catalog') {
-      showTypingThen(() => {
-        addCatalog(s);
-        renderSteps(steps, i+1);
-      });
-    } else if(s.type === 'payment') {
-      showTypingThen(() => {
-        addPayment();
-        renderSteps(steps, i+1);
-      });
-    } else if(s.type === 'una') {
-      showTypingThen(() => {
-        addUna();
-        renderSteps(steps, i+1);
-      });
-    } else if(s.type === 'nuvei') {
-      showTypingThen(() => {
-        addNuvei();
-        renderSteps(steps, i+1);
-      });
-    } else if(s.type === 'success') {
-      showTypingThen(() => {
-        addSuccess();
-        renderSteps(steps, i+1);
-      });
-    }
-  }, delay);
+const chat = ()=>document.getElementById('chat');
+
+function scrollBottom(){
+  const c=chat(); c.scrollTop=c.scrollHeight;
 }
 
-function showTypingThen(cb) {
-  busy = true;
-  const wrap = document.createElement('div');
-  wrap.className = 'wm bot'; wrap.id = 'typing-ind';
-  wrap.innerHTML = '<div class="wb"><div class="typing"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>';
-  chat.appendChild(wrap);
-  chat.scrollTop = chat.scrollHeight;
-  setTimeout(() => {
-    const t = document.getElementById('typing-ind');
-    if(t) t.remove();
-    busy = false;
+function addEl(el){chat().appendChild(el);scrollBottom();}
+
+function addBubble(side,html){
+  const w=document.createElement('div');
+  w.className='wm '+side;
+  w.innerHTML=`<div class="wb">${html}</div><div class="wts">${ts()}</div>`;
+  addEl(w);
+}
+
+function showTyping(cb){
+  busy=true;
+  const w=document.createElement('div');
+  w.className='wm bot';w.id='typing-ind';
+  w.innerHTML='<div class="typing-wrap"><div class="td"></div><div class="td"></div><div class="td"></div></div>';
+  addEl(w);
+  setTimeout(()=>{
+    const t=document.getElementById('typing-ind');
+    if(t)t.remove();
+    busy=false;
     cb();
-    chat.scrollTop = chat.scrollHeight;
-  }, 900);
+    scrollBottom();
+  },850);
 }
 
-function addBubble(side, html) {
-  const w = document.createElement('div');
-  w.className = 'wm ' + side;
-  w.innerHTML = `<div class="wb">${html.replace(/\n/g,'<br>')}</div><div class="wts">${ts()}</div>`;
-  chat.appendChild(w);
-  chat.scrollTop = chat.scrollHeight;
+function renderStep(step){
+  if(step.type==='sep'){
+    const d=document.createElement('div');
+    d.className='wa-sep';d.textContent=step.text;addEl(d);return;
+  }
+  if(step.type==='bot'){
+    showTyping(()=>addBubble('bot',step.text));return;
+  }
+  if(step.type==='user'){
+    addBubble('user',step.text);return;
+  }
+  if(step.type==='list'){
+    showTyping(()=>buildList(step));return;
+  }
+  if(step.type==='waflow'){
+    showTyping(()=>buildFlow());return;
+  }
+  if(step.type==='catalog'){
+    showTyping(()=>buildCatalog());return;
+  }
+  if(step.type==='payment'){
+    showTyping(()=>buildPayment());return;
+  }
+  if(step.type==='una'){
+    showTyping(()=>buildUna());return;
+  }
+  if(step.type==='nuvei'){
+    showTyping(()=>buildNuvei());return;
+  }
+  if(step.type==='success'){
+    showTyping(()=>buildSuccess());return;
+  }
 }
 
-function addList(s) {
-  const w = document.createElement('div');
-  w.className = 'wm bot';
-  let items = s.items.map(it => `
-    <div class="wl-item" onclick="listTap(this,'${it.flow || ''}','${(it.resp||'').replace(/'/g,"\\'")}')">
-      <div><div class="wl-t">${it.t}</div><div class="wl-d">${it.d}</div></div>
-      <i class="ti ti-chevron-right wl-arr" aria-hidden="true"></i>
-    </div>`).join('');
-  w.innerHTML = `<div class="w-list"><div class="wl-hdr">${s.header}</div>${items}</div><div class="wts">${ts()}</div>`;
-  chat.appendChild(w);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function listTap(el, flow, resp) {
-  if(flow) { goFlowDirect(flow); return; }
-  if(resp) { addBubble('bot', resp); }
-}
-
-function goFlowDirect(key) {
-  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
-  chat.innerHTML = '';
-  const steps = FLOWS[key];
-  if(steps) renderSteps(steps, 0);
-}
-
-function addWAFlow(s) {
-  const w = document.createElement('div');
-  w.className = 'wm bot';
-  let fields = s.fields.map(f => {
-    if(f.type === 'select') {
-      let opts = f.opts.map(o=>`<option>${o}</option>`).join('');
-      return `<div class="wf-lbl">${f.label}</div><select class="wf-sel"><option value="">Seleccionar...</option>${opts}</select>`;
+function nextStep(){
+  if(busy) return;
+  const scene=SCENES[currentScene];
+  if(currentStep>=scene.steps.length){
+    // advance to next scene
+    if(currentScene<SCENES.length-1){
+      currentScene++;
+      currentStep=0;
+      updateSidebarActive();
+      document.getElementById('scene-label').textContent=SCENES[currentScene].label;
     }
-    return `<div class="wf-lbl">${f.label}</div><input class="wf-inp" placeholder="${f.label}..."/>`;
-  }).join('');
-  w.innerHTML = `<div class="w-flow">
-    <div class="wf-top">
-      <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center"><i class="ti ti-search" style="font-size:14px;color:#fff" aria-hidden="true"></i></div>
-      <div><div class="wf-title">${s.title}</div><div class="wf-sub">${s.sub}</div></div>
-      <div style="margin-left:auto"><div class="wf-meta"><i class="ti ti-brand-meta" aria-hidden="true"></i>WhatsApp Flows</div></div>
-    </div>
-    <div class="wf-body">${fields}<button class="wf-submit" onclick="submitFlow('${s.next||'catalog'}')">Buscar repuesto →</button></div>
-  </div><div class="wts">${ts()}</div>`;
-  chat.appendChild(w);
-  chat.scrollTop = chat.scrollHeight;
+    document.getElementById('next-btn').disabled=(currentStep>=SCENES[currentScene].steps.length && currentScene===SCENES.length-1);
+    return;
+  }
+  renderStep(scene.steps[currentStep]);
+  currentStep++;
+  document.getElementById('scene-label').textContent=scene.label;
 }
 
-function submitFlow(next) {
-  addBubble('user','✓ Formulario enviado');
-  setTimeout(() => goFlowDirect(next), 400);
+function repeatScene(){
+  if(busy)return;
+  chat().innerHTML='';
+  currentStep=0;
+  renderSceneFull(currentScene);
 }
 
-function addCatalog(s) {
-  const w = document.createElement('div');
-  w.className = 'wm bot';
-  let items = s.items.map(it => `
-    <div class="wc-item">
-      <div class="wc-img">${it.emoji}</div>
-      <div style="flex:1;min-width:0">
-        <div class="wc-name">${it.name}</div>
-        <div class="wc-ref">Ref: ${it.ref}</div>
-        <div class="wc-price">${it.price}</div>
-        <div class="wc-stk">✓ ${it.stock}</div>
-      </div>
-      <button class="wc-add" onclick="addToCart(this)">+ Agregar</button>
+function jumpScene(idx,btn){
+  if(busy)return;
+  currentScene=idx;
+  currentStep=0;
+  chat().innerHTML='';
+  document.querySelectorAll('.sb-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  document.getElementById('scene-label').textContent=SCENES[idx].label;
+  document.getElementById('next-btn').disabled=false;
+  // close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+function updateSidebarActive(){
+  document.querySelectorAll('.sb-btn').forEach((b,i)=>{
+    b.classList.toggle('active',i===currentScene);
+  });
+}
+
+function userType(val){
+  if(!val.trim())return;
+  addBubble('user',val);
+  setTimeout(()=>showTyping(()=>addBubble('bot','Entendido. ¿Me indicas la marca y modelo de tu vehículo para ayudarte mejor?')),400);
+}
+
+// ── BUILDERS ──
+function buildList(s){
+  const w=document.createElement('div');w.className='wm bot';
+  const items=s.items.map(it=>`
+    <div class="wl-item" onclick="listTap(${it.scene!==undefined?it.scene:'null'},'${(it.resp||'').replace(/'/g,"\\'")}')">
+      <div><div class="wl-t">${it.t}</div><div class="wl-d">${it.d}</div></div>
+      <span class="wl-arr">›</span>
     </div>`).join('');
-  w.innerHTML = `<div class="w-catalog">
-    <div class="wc-hdr"><i class="ti ti-shopping-bag" aria-hidden="true"></i>Catálogo JEP · Meta Business</div>
-    ${items}
+  w.innerHTML=`<div class="w-list"><div class="wl-hdr">${s.header}</div>${items}</div><div class="wts">${ts()}</div>`;
+  addEl(w);
+}
+
+function listTap(scene,resp){
+  if(scene!==null&&scene!==undefined){jumpScene(scene,null);return;}
+  if(resp){showTyping(()=>addBubble('bot',resp));}
+}
+
+function buildFlow(){
+  const w=document.createElement('div');w.className='wm bot';
+  const marcas=['Chevrolet','Toyota','Hyundai','Kia','Nissan','Mazda','Suzuki','Renault','Ford','Mitsubishi','Honda','Volkswagen'];
+  const modelos=['Aveo','Corolla','Tucson','Sportage','Sentra B15','CX-5','Grand Vitara','Duster','Ranger','L200 Sportero'];
+  const años=['2024','2023','2022','2021','2020','2019','2018','2017','2016','2015','2014'];
+  const tipos=['Guardachoque Delantero','Guardachoque Posterior','Guardafango','Capót','Retrovisor','Mascarilla','Puerta','Panel Delantero','Rejilla'];
+  w.innerHTML=`<div class="w-flow">
+    <div class="wf-top">
+      <div class="wf-av">🔍</div>
+      <div><div class="wf-title">Buscar repuesto</div><div class="wf-sub">Paso 1 de 2 · Datos del vehículo</div></div>
+      <div class="wf-meta-badge">Meta · WhatsApp Flows</div>
+    </div>
+    <div class="wf-body">
+      <div class="wf-lbl">Marca</div>
+      <select class="wf-sel"><option value="">Seleccionar...</option>${marcas.map(m=>`<option>${m}</option>`).join('')}</select>
+      <div class="wf-lbl">Modelo</div>
+      <select class="wf-sel"><option value="">Seleccionar...</option>${modelos.map(m=>`<option>${m}</option>`).join('')}</select>
+      <div class="wf-lbl">Año</div>
+      <select class="wf-sel"><option value="">Seleccionar...</option>${años.map(a=>`<option>${a}</option>`).join('')}</select>
+      <div class="wf-lbl">Tipo de repuesto</div>
+      <select class="wf-sel"><option value="">Seleccionar...</option>${tipos.map(t=>`<option>${t}</option>`).join('')}</select>
+      <button class="wf-submit" onclick="submitFlow()">Buscar repuesto →</button>
+    </div>
   </div><div class="wts">${ts()}</div>`;
-  chat.appendChild(w);
-  chat.scrollTop = chat.scrollHeight;
+  addEl(w);
 }
 
-function addToCart(btn) {
-  btn.textContent = '✓';
-  btn.style.background = '#075E54';
-  setTimeout(() => goFlowDirect('payment'), 600);
+function submitFlow(){
+  addBubble('user','✓ Formulario enviado');
+  setTimeout(()=>jumpScene(2,document.querySelector('[data-scene="2"]')),400);
 }
 
-function addPayment() {
-  const w = document.createElement('div');
-  w.className = 'wm bot';
-  w.innerHTML = `<div class="w-pay">
-    <div class="wp-hdr"><i class="ti ti-shopping-cart" aria-hidden="true"></i>Resumen de pedido</div>
+function buildCatalog(){
+  const items=[
+    {e:'🚗',n:'Guardachoque Del. Chevrolet Aveo 2010/2014',r:'CV04089EA',p:'$34.62',s:'Disponible'},
+    {e:'🚙',n:'Guardafango Der. Chevrolet Aveo 2004/2010',r:'CV11024B',p:'$28.50',s:'Disponible'},
+    {e:'🚕',n:'Capót Chevrolet Aveo Emotion 2009/2014',r:'CV05031GA',p:'$87.40',s:'Últimas 3 unidades'}
+  ];
+  const w=document.createElement('div');w.className='wm bot';
+  w.innerHTML=`<div class="w-catalog">
+    <div class="wc-hdr">📦 Catálogo JEP Importaciones<span class="wc-hdr-badge">Meta Business</span></div>
+    ${items.map(it=>`<div class="wc-item">
+      <div class="wc-img">${it.e}</div>
+      <div style="flex:1;min-width:0">
+        <div class="wc-name">${it.n}</div>
+        <div class="wc-ref">Ref: ${it.r}</div>
+        <div class="wc-price">${it.p}</div>
+        <div class="wc-stk">✓ ${it.s}</div>
+      </div>
+      <button class="wc-add" onclick="addCart(this)">+ Agregar</button>
+    </div>`).join('')}
+  </div><div class="wts">${ts()}</div>`;
+  addEl(w);
+}
+
+function addCart(btn){
+  btn.textContent='✓';btn.style.background='#075E54';
+  setTimeout(()=>jumpScene(3,document.querySelector('[data-scene="3"]')),600);
+}
+
+function buildPayment(){
+  const w=document.createElement('div');w.className='wm bot';
+  w.innerHTML=`<div class="w-pay">
+    <div class="wp-hdr">🛒 Resumen de pedido</div>
     <div class="wp-sum">
       <div class="wp-row"><span>Guardachoque Del. Chevrolet Aveo</span><span>$34.62</span></div>
       <div class="wp-row"><span>Envío a Guayaquil</span><span>$3.90</span></div>
     </div>
     <div class="wp-total"><span>Total</span><span>$38.52</span></div>
     <div class="wp-methods">
-      <div class="wp-label">Elige tu forma de pago</div>
-      <button class="wp-btn" onclick="goFlowDirect('una')">
+      <div class="wp-lbl">Elige tu forma de pago</div>
+      <button class="wp-btn" onclick="jumpScene(4,document.querySelector('[data-scene=\\'4\\']'))">
         <div class="wp-ico una-ico">U</div>
         <div><div class="wp-btn-lbl">Una — Banco Pichincha</div><div class="wp-btn-sub">Genera código de pago al instante</div></div>
-        <i class="ti ti-chevron-right" style="margin-left:auto;font-size:14px;color:#ccc" aria-hidden="true"></i>
+        <span class="wp-arr">›</span>
       </button>
-      <button class="wp-btn" onclick="goFlowDirect('nuvei')">
-        <div class="wp-ico nuvei-ico"><i class="ti ti-credit-card" style="font-size:14px" aria-hidden="true"></i></div>
+      <button class="wp-btn" onclick="jumpScene(5,document.querySelector('[data-scene=\\'5\\']'))">
+        <div class="wp-ico nuvei-ico">💳</div>
         <div><div class="wp-btn-lbl">Tarjeta de crédito / débito</div><div class="wp-btn-sub">Procesado por Nuvei · in-chat</div></div>
-        <i class="ti ti-chevron-right" style="margin-left:auto;font-size:14px;color:#ccc" aria-hidden="true"></i>
+        <span class="wp-arr">›</span>
       </button>
     </div>
   </div><div class="wts">${ts()}</div>`;
-  chat.appendChild(w);
-  chat.scrollTop = chat.scrollHeight;
+  addEl(w);
 }
 
-function addUna() {
-  const code = Math.floor(100000 + Math.random() * 900000);
-  const w = document.createElement('div');
-  w.className = 'wm bot';
-  w.innerHTML = `<div class="w-una">
+function buildUna(){
+  const code=Math.floor(100000+Math.random()*900000);
+  const exp=new Date(Date.now()+15*60000).toLocaleTimeString('es-EC',{hour:'2-digit',minute:'2-digit'});
+  const w=document.createElement('div');w.className='wm bot';
+  w.innerHTML=`<div class="w-una">
     <div class="wu-hdr">
-      <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#fff">U</div>
+      <div class="wu-av">U</div>
       <div><div class="wu-title">Una — Banco Pichincha</div><div class="wu-sub">Código de pago generado</div></div>
     </div>
     <div class="wu-body">
-      <div style="font-size:10.5px;color:#667781">Monto a pagar</div>
-      <div style="font-size:22px;font-weight:500;color:#111;margin:4px 0">$38.52</div>
-      <div style="font-size:10px;color:#667781;margin-bottom:8px">Código válido por 15 minutos</div>
-      <div style="font-size:10px;color:#667781">Tu código Una</div>
+      <div class="wu-monto-lbl">Monto a pagar</div>
+      <div class="wu-monto">$38.52</div>
+      <div class="wu-code-lbl">Tu código Una</div>
       <div class="wu-code">${code}</div>
-      <div class="wu-exp">Vence: ${new Date(Date.now()+15*60000).toLocaleTimeString('es-EC',{hour:'2-digit',minute:'2-digit'})}</div>
-      <div class="wu-tip">📱 Abre la app <b>Una</b> de Banco Pichincha → Pagar → ingresa este código → confirma el pago.</div>
+      <div class="wu-exp">Vence: ${exp} · válido por 15 min</div>
+      <div class="wu-tip">📱 Abre la app <b>Una</b> → Pagar → ingresa este código → confirma el pago.</div>
     </div>
   </div><div class="wts">${ts()}</div>`;
-  chat.appendChild(w);
-  chat.scrollTop = chat.scrollHeight;
-  setTimeout(() => {
-    addBubble('bot','Una vez que completes el pago en la app, recibirás la confirmación aquí. ¿Deseas continuar?');
-    const chips = addChips([['✓ Ver confirmación','success'],['← Volver al inicio','start']]);
-  }, 1200);
+  addEl(w);
+  setTimeout(()=>{
+    showTyping(()=>{
+      addBubble('bot','Una vez que completes el pago en la app, recibirás la confirmación aquí mismo por WhatsApp. ¿Listo?');
+      buildChips([['✅ Ver confirmación',6],['🏠 Menú principal',0]]);
+    });
+  },1200);
 }
 
-function addNuvei() {
-  const w = document.createElement('div');
-  w.className = 'wm bot';
-  w.innerHTML = `<div class="w-nuvei">
+function buildNuvei(){
+  const w=document.createElement('div');w.className='wm bot';
+  w.innerHTML=`<div class="w-nuvei">
     <div class="wn-hdr">
-      <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center"><i class="ti ti-credit-card" style="font-size:14px;color:#fff" aria-hidden="true"></i></div>
+      <div class="wn-av">🔒</div>
       <div><div class="wn-title">Pago con tarjeta · Nuvei</div><div class="wn-sub">Conexión segura TLS 1.3 · PCI-DSS</div></div>
     </div>
     <div class="wn-body">
@@ -506,60 +704,53 @@ function addNuvei() {
       </div>
       <div class="wn-lbl">Nombre en tarjeta</div>
       <input class="wn-inp" placeholder="Como aparece en la tarjeta"/>
-      <button class="wn-pay" onclick="goFlowDirect('success')">Pagar $38.52 →</button>
-      <div class="wn-secure"><i class="ti ti-lock" aria-hidden="true"></i>Pago 100% in-chat · Procesado por Nuvei</div>
+      <button class="wn-pay" onclick="jumpScene(6,document.querySelector('[data-scene=\\'6\\']'))">Pagar $38.52 →</button>
+      <div class="wn-secure">🔒 Pago 100% in-chat · Procesado por Nuvei</div>
     </div>
   </div><div class="wts">${ts()}</div>`;
-  chat.appendChild(w);
-  chat.scrollTop = chat.scrollHeight;
+  addEl(w);
 }
 
-function addSuccess() {
-  const order = 'JEP-' + Math.floor(10000 + Math.random()*90000);
-  const w = document.createElement('div');
-  w.className = 'wm bot';
-  w.innerHTML = `<div class="w-ok">
-    <div class="wo-icon"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
+function buildSuccess(){
+  const order='JEP-'+Math.floor(10000+Math.random()*90000);
+  const w=document.createElement('div');w.className='wm bot';
+  w.innerHTML=`<div class="w-ok">
+    <div class="wo-icon">✅</div>
     <div class="wo-title">¡Pago confirmado!</div>
     <div class="wo-sub">Tu pedido está siendo preparado</div>
     <div class="wo-num">Orden: <b>${order}</b></div>
     <div style="font-size:10px;color:#667781;margin-top:6px">Recibirás actualizaciones de tu envío aquí mismo por WhatsApp.</div>
   </div><div class="wts">${ts()}</div>`;
-  chat.appendChild(w);
-  setTimeout(() => {
-    addBubble('bot','🎉 ¡Gracias por tu compra en JEP Importaciones! Envío a Guayaquil estimado en <b>24-48 horas</b>. ¿Puedo ayudarte con algo más?');
-    addChips([['🔍 Buscar otro repuesto','flow'],['📦 Rastrear pedido',null],['🏠 Menú principal','start']]);
-  }, 1000);
+  addEl(w);
+  setTimeout(()=>{
+    showTyping(()=>{
+      addBubble('bot','🎉 ¡Gracias por tu compra en <b>JEP Importaciones</b>! Tu envío a Guayaquil llegará en <b>24–48 horas</b>. ¿En qué más puedo ayudarte?');
+      buildChips([['🔍 Buscar otro repuesto',1],['🏠 Menú principal',0]]);
+    });
+  },1000);
 }
 
-function addChips(pairs) {
-  const row = document.createElement('div');
-  row.className = 'chip-row';
-  pairs.forEach(([label, flow]) => {
-    const c = document.createElement('div');
-    c.className = 'wchip';
-    c.textContent = label;
-    if(flow) c.onclick = () => goFlowDirect(flow);
+function buildChips(pairs){
+  const row=document.createElement('div');row.className='chip-row';
+  pairs.forEach(([lbl,scene])=>{
+    const c=document.createElement('div');c.className='wchip';c.textContent=lbl;
+    c.onclick=()=>jumpScene(scene,document.querySelector(`[data-scene="${scene}"]`));
     row.appendChild(c);
   });
-  chat.appendChild(row);
-  chat.scrollTop = chat.scrollHeight;
+  addEl(row);
 }
 
-function userSend(val) {
-  const input = document.getElementById('wainput');
-  if(!val.trim()) return;
-  input.value = '';
-  addBubble('user', val);
-  setTimeout(() => {
-    addBubble('bot','Entendido. ¿Puedes darme más detalles sobre la marca y modelo de tu vehículo?');
-  }, 1000);
+// ── INIT: render first scene step by step ──
+function renderSceneFull(idx){
+  const scene=SCENES[idx];
+  document.getElementById('scene-label').textContent=scene.label;
+  scene.steps.forEach((step,i)=>{
+    setTimeout(()=>renderStep(step), i*950);
+  });
+  currentStep=scene.steps.length;
 }
 
-function ts() {
-  return new Date().toLocaleTimeString('es-EC',{hour:'2-digit',minute:'2-digit'});
-}
-
-goFlow('start');
-document.querySelectorAll('.fbtn')[0].classList.add('active');
+renderSceneFull(0);
 </script>
+</body>
+</html>
